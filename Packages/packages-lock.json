@@ -6,6 +6,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+      "com.bun3.unity-ui.core": {
+      "version": "file:com.bun3.unity-ui.core",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "9.1.2",
       "depth": 1,
