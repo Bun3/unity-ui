@@ -1,8 +1,12 @@
 {
-    "name": "Bun3.UnityUI.Core",
+    "name": "Bun3.UnityUI.Core.Editor",
     "rootNamespace": "Core",
-    "references": [],
-    "includePlatforms": [],
+    "references": [
+        "GUID:0bdd889f83c6c0149856c9d9e61059fb"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

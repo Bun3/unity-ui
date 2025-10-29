@@ -1,6 +1,6 @@
 {
   "name": "com.bun3.unity-ui.core",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "displayName": "Unity UI Core",
   "description": "Core Unity ui codes for expand and inherit",
   "unity": "2022.3",
