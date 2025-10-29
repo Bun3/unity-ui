@@ -4,8 +4,8 @@
   "displayName": "Unified Toggle Group",
   "description": "This is an example package",
   "dependencies": {
-    "com.mackysoft.serializereference-extensions": "1.6.1",
-    "com.bun3.unity-ui.core": "1.0.1"
+    "com.mackysoft.serializereference-extensions": "https://github.com/mackysoft/Unity-SerializeReferenceExtensions.git?path=Assets/MackySoft/MackySoft.SerializeReferenceExtensions",
+    "com.bun3.unity-ui.core": "https://github.com/Bun3/unity-ui.git?path=Packages/com.bun3.unity-ui.core"
   },
   "repository": {
     "type": "git",
