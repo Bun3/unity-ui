@@ -1,8 +1,12 @@
 {
   "name": "com.bun3.unity-ui.unified-toggle-group",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "displayName": "Unified Toggle Group",
   "description": "This is an example package",
+  "dependencies": {
+    "com.mackysoft.serializereference-extensions": "1.6.1",
+    "com.bun3.unity-ui.core": "1.0.1"
+  },
   "unity": "2022.3",
   "author": {
     "name": "Bun3",

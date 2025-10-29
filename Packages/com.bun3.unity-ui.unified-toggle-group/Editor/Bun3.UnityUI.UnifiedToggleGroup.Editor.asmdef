@@ -1,0 +1,18 @@
+{
+    "name": "Bun3.UnityUI.UnifiedToggleGroup.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6da1b850de56dff4187298a20f5e241a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
