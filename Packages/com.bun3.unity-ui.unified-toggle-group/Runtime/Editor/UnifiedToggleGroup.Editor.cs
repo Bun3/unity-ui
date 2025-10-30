@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public partial class UnifiedToggleGroup
@@ -38,5 +39,43 @@ public partial class UnifiedToggleGroup
             return;
         _toggles = _toggles.Where(t => t != toggle).ToArray();
         UpdateValues();
+    }
+    
+    static UnifiedToggleGroup()
+    {
+        EditorApplication.hierarchyWindowItemOnGUI += HierarchyWindowCallback;
+    }
+
+    public static void HierarchyWindowCallback(int instanceID, Rect selectionRect)
+    {
+        var go = (GameObject)EditorUtility.InstanceIDToObject(instanceID);
+        var group = go?.GetComponent<UnifiedToggleGroup>();
+        if (group == null)
+            return;
+
+        if (go.GetComponent<UnifiedToggleToggleGroup>())
+            return;
+
+        var rect = new Rect(
+            GUILayoutUtility.GetLastRect().width - selectionRect.height - (selectionRect.width * 0.5f),
+            selectionRect.y,
+            selectionRect.width * 0.5f,
+            selectionRect.height
+        );
+
+        var prev = group.CurrentPreset;
+        var presets = group.GetPresets().ToArray();
+        var index = presets.ToList().IndexOf(prev);
+
+        var style = EditorStyles.popup;
+        style.alignment = TextAnchor.MiddleRight;
+        
+        var nextIndex = EditorGUI.Popup(rect, index, presets, style);
+        if (index != nextIndex)
+        {
+            group.SetValue(presets[nextIndex]);
+            EditorUtility.SetDirty(group);
+            HandleUtility.Repaint();
+        }
     }
 }

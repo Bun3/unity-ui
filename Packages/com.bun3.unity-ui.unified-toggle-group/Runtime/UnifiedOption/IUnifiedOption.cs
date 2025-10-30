@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public interface IUnifiedOption
 {
     void SetOptionValues(string[] values);

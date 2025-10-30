@@ -18,6 +18,8 @@ public partial class UnifiedToggleToggleGroup : BaseUnifiedToggle<UnifiedToggleG
     [SerializeField, Required(inAutoCache: true), ReadOnly]
     protected UnifiedToggleGroup _group;
     protected override UnifiedToggleGroup component => _group;
+    
+    public UnifiedToggleGroup Group => _group;
 
 
 }
