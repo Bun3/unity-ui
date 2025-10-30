@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
-#endif
 
 public abstract partial class BaseUnifiedToggle : UnifiedToggle
 {
@@ -12,7 +10,7 @@ public abstract partial class BaseUnifiedToggle<TComponent> : BaseUnifiedToggle 
 {
     protected abstract TComponent component { get; }
 
-    [SerializeReference] protected List<IUnifiedOption<TComponent>> _options = new();
+    [SerializeReference, SubclassSelector] protected List<IUnifiedOption<TComponent>> _options = new();
 
     public sealed override void SetValue(string value)
     {
