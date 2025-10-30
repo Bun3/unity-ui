@@ -4,19 +4,25 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public sealed partial class UnifiedToggleGroup : UnifiedToggle
 {
-    [SerializeField] private string[] _presets = { "On", "Off" };
+    [SerializeField] private string[] _presets = { "Off", "On" };
     [SerializeField] private BaseUnifiedToggle[] _toggles = { };
 
     private IEnumerable<IUnifiedToggle> Toggles => _toggles;
 
     public string CurrentPreset { get; private set; } = string.Empty;
 
+    public bool isOn
+    {
+        get => CurrentPreset == _presets[^1];
+        set => SetValue(value ? _presets[^1] : _presets[0]);
+    }
+
     public override void SetValue(string value)
     {
         CurrentPreset = value;
         foreach (var toggle in Toggles)
         {
-            if (toggle as UnityEngine.Object != this)
+            if (toggle as Object != this)
                 toggle.SetValue(value);
         }
     }
@@ -25,7 +31,7 @@ public sealed partial class UnifiedToggleGroup : UnifiedToggle
     {
         foreach (var toggle in Toggles)
         {
-            if (toggle as UnityEngine.Object != this)
+            if (toggle as Object != this)
                 toggle.SetOptionValues(values);
         }
     }
