@@ -9,6 +9,15 @@ public class UnifiedOptionImageSprite : UnifiedOption<Image, Sprite>
 {
     protected override void SetOption(Image component, Sprite value)
     {
+        component.sprite = value;
+    }
+}
+
+[Serializable]
+public class UnifiedOptionImageOverrideSprite : UnifiedOption<Image, Sprite>
+{
+    protected override void SetOption(Image component, Sprite value)
+    {
         component.overrideSprite = value;
     }
 }
