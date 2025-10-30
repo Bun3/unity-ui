@@ -18,7 +18,13 @@ namespace Core.Editor.Drawers.Required
                 {
                     var go = property.serializedObject.targetObject as GameObject;
                     go ??= (property.serializedObject.targetObject as Component)?.gameObject;
-                    property.objectReferenceValue = go?.GetComponent(fieldInfo.FieldType);    
+                    property.objectReferenceValue = go?.GetComponent(fieldInfo.FieldType);
+                    
+                    if (property.objectReferenceValue != null)
+                    {
+                        property.serializedObject.ApplyModifiedProperties();
+                        return;
+                    }
                 }
                 
                 
