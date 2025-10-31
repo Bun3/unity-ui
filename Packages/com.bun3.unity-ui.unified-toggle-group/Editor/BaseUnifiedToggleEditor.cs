@@ -4,17 +4,17 @@ using UnityEngine;
 /// <summary>
 /// BaseUnifiedToggle을 상속하는 모든 클래스에 적용되는 커스텀 에디터입니다.
 /// </summary>
-[CustomEditor(typeof(BaseUnifiedToggle<>), true)]
+[CustomEditor(typeof(BaseUnifiedToggle), true)]
 public class BaseUnifiedToggleEditor : Editor
 {
     private SerializedProperty _script;
-    private SerializedProperty _group;
+    private SerializedProperty _authorGroup;
     private SerializedProperty _options;
     
     private void OnEnable()
     {
         _script = serializedObject.FindProperty("m_Script");
-        _group = serializedObject.FindProperty("_authorGroup");
+        _authorGroup = serializedObject.FindProperty("_authorGroup");
         _options = serializedObject.FindProperty("_options");
     }
 
@@ -26,17 +26,17 @@ public class BaseUnifiedToggleEditor : Editor
         EditorGUILayout.PropertyField(_script);
         GUI.enabled = true;
         
-        var prevGroup = _group.objectReferenceValue;
-        EditorGUILayout.PropertyField(_group);
+        var prevGroup = _authorGroup.objectReferenceValue;
+        EditorGUILayout.PropertyField(_authorGroup);
         
-        if (prevGroup != _group.objectReferenceValue)
+        if (prevGroup != _authorGroup.objectReferenceValue)
         {
             if (prevGroup is UnifiedToggleGroup oldGroup)
             {
                 oldGroup.Unregister((BaseUnifiedToggle)target);
             }
 
-            if (_group.objectReferenceValue is UnifiedToggleGroup newGroup)
+            if (_authorGroup.objectReferenceValue is UnifiedToggleGroup newGroup)
             {
                 newGroup.Register((BaseUnifiedToggle)target);
             }
@@ -50,7 +50,7 @@ public class BaseUnifiedToggleEditor : Editor
         {
             serializedObject.ApplyModifiedProperties();
             
-            if (_group.objectReferenceValue is UnifiedToggleGroup group)
+            if (_authorGroup.objectReferenceValue is UnifiedToggleGroup group)
             {
                 Undo.RecordObject(target, "Sync Options");
                 group.UpdateValues();
