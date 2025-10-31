@@ -1,6 +1,6 @@
 {
   "name": "com.bun3.unity-ui.unified-toggle-group",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "displayName": "Unified Toggle Group",
   "description": "This is an example package",
   "dependencies": {
