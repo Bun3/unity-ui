@@ -6,6 +6,7 @@ public abstract partial class BaseUnifiedToggle : UnifiedToggle
     [SerializeField] protected UnifiedToggleGroup _authorGroup;
 }
 
+[DisallowMultipleComponent]
 public abstract partial class BaseUnifiedToggle<TComponent> : BaseUnifiedToggle where TComponent : Component
 {
     protected abstract TComponent component { get; }
