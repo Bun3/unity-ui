@@ -48,34 +48,48 @@ public partial class UnifiedToggleGroup
 
     public static void HierarchyWindowCallback(int instanceID, Rect selectionRect)
     {
-        var go = (GameObject)EditorUtility.InstanceIDToObject(instanceID);
-        var group = go?.GetComponent<UnifiedToggleGroup>();
-        if (group == null)
+        var go = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
+        var group = go ? go.GetComponent<UnifiedToggleGroup>() : null;
+        if (group == null) return;
+        if (go.GetComponent<UnifiedToggleToggleGroup>()) return; // 기존 예외 유지
+
+        var presets = group.GetPresets()?.ToArray() ?? Array.Empty<string>();
+        if (presets.Length == 0) 
             return;
 
-        if (go.GetComponent<UnifiedToggleToggleGroup>())
-            return;
+        var index = Array.IndexOf(presets, group.CurrentPreset);
+        var currentLabel = index >= 0 ? presets[index] ?? "(None)" : "(Select)";
 
-        var rect = new Rect(
-            GUILayoutUtility.GetLastRect().width - selectionRect.height - (selectionRect.width * 0.5f),
-            selectionRect.y,
-            selectionRect.width * 0.5f,
-            selectionRect.height
-        );
-
-        var prev = group.CurrentPreset;
-        var presets = group.GetPresets().ToArray();
-        var index = presets.ToList().IndexOf(prev);
-
-        var style = EditorStyles.popup;
+        // 하이어라키 우측 정렬된 작은 드롭다운 렉트
+        var style = EditorStyles.miniPullDown;
         style.alignment = TextAnchor.MiddleRight;
         
-        var nextIndex = EditorGUI.Popup(rect, index, presets, style);
-        if (index != nextIndex)
+        var size = style.CalcSize(new GUIContent(currentLabel));
+        var width = Mathf.Max(68f, size.x + 12f);
+        var rect = new Rect(selectionRect.xMax - width - 4f, selectionRect.y, width, selectionRect.height);
+
+        // 그리기
+        if (Event.current.type == EventType.Repaint)
+            style.Draw(rect, new GUIContent(currentLabel), false, false, false, false);
+
+        // 클릭 처리: 메뉴로 바꾸기(하이어라키에서도 안정적으로 동작)
+        if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition))
         {
-            group.SetValue(presets[nextIndex]);
-            EditorUtility.SetDirty(group);
-            HandleUtility.Repaint();
+            var menu = new GenericMenu();
+            for (var i = 0; i < presets.Length; i++)
+            {
+                var capture = i;
+                var on = capture == index;
+                var label = presets[capture] ?? "(None)";
+                menu.AddItem(new GUIContent(label), on, () =>
+                {
+                    group.SetValue(presets[capture]);
+                    EditorUtility.SetDirty(group);
+                    EditorApplication.RepaintHierarchyWindow();
+                });
+            }
+            menu.DropDown(rect);
+            Event.current.Use();
         }
     }
 }
