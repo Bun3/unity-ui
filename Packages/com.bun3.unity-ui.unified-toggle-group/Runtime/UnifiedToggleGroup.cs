@@ -7,8 +7,6 @@ public sealed partial class UnifiedToggleGroup : UnifiedToggle
     [SerializeField] private string[] _presets = { "Off", "On" };
     [SerializeField] private BaseUnifiedToggle[] _toggles = { };
 
-    private IEnumerable<IUnifiedToggle> Toggles => _toggles;
-
     public string CurrentPreset { get; private set; } = string.Empty;
 
     public bool isOn
@@ -20,20 +18,14 @@ public sealed partial class UnifiedToggleGroup : UnifiedToggle
     public override void SetValue(string value)
     {
         CurrentPreset = value;
-        foreach (var toggle in Toggles)
-        {
-            if (toggle as Object != this)
-                toggle.SetValue(value);
-        }
+        foreach (var toggle in _toggles)
+            toggle.SetValue(value);
     }
 
     public override void SetOptionValues(string[] values)
     {
-        foreach (var toggle in Toggles)
-        {
-            if (toggle as Object != this)
-                toggle.SetOptionValues(values);
-        }
+        foreach (var toggle in _toggles)
+            toggle.SetOptionValues(values);
     }
 
     public string[] GetPresets()
