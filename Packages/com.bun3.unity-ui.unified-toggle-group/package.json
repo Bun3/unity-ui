@@ -1,6 +1,6 @@
 {
   "name": "com.bun3.unity-ui.unified-toggle-group",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "displayName": "Unified Toggle Group",
   "description": "This is an example package",
   "dependencies": {
@@ -16,5 +16,12 @@
     "name": "Bun3",
     "email": "dudcks779425@gmail.com",
     "url": ""
-  }
+  },
+  "samples": [
+    {
+      "displayName": "Unified Toggle Sample",
+      "description": "Example scene demonstrating how to set up UnifiedToggleGroup and BaseUnifiedToggle.",
+      "path": "Samples~/UnifiedToggleSample"
+    }
+  ]
 }
