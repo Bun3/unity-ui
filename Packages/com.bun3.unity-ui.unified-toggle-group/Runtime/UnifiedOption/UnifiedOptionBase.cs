@@ -1,12 +1,15 @@
 using System;
 using Core.Attributes.ReadOnly;
 
-[Serializable]
-public abstract class UnifiedOptionBase
+namespace UnifiedToggle
 {
     [Serializable]
-    public class BaseOption
+    public abstract class UnifiedOptionBase
     {
-        [ReadOnly] public string key;
+        [Serializable]
+        public class BaseOption
+        {
+            [ReadOnly] public string key;
+        }
     }
 }

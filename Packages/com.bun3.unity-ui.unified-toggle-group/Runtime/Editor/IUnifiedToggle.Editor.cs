@@ -1,9 +1,8 @@
-using Cysharp.Threading.Tasks;
-
+﻿
 namespace UnifiedToggle
 {
     public partial interface IUnifiedToggle
     {
-        UniTask SetValueAsync(string value);
+        void SetOptionValues(string[] values);
     }
 }

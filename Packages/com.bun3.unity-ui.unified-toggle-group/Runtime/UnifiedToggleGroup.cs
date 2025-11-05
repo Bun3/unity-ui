@@ -1,40 +1,54 @@
-using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using ZLinq;
 
-[DisallowMultipleComponent]
-public sealed partial class UnifiedToggleGroup : UnifiedToggle
+[assembly: ZLinqDropIn("UnifiedToggle", DropInGenerateTypes.Everything)]
+namespace UnifiedToggle
 {
-    [SerializeField] private string[] _presets = { "Off", "On" };
-    [SerializeField] private BaseUnifiedToggle[] _toggles = { };
-
-    public string CurrentPreset { get; private set; } = string.Empty;
-
-    public bool isOn
+    
+    [DisallowMultipleComponent]
+    public sealed partial class UnifiedToggleGroup : MonoBehaviour, IUnifiedToggle
     {
-        get => CurrentPreset == _presets[^1];
-        set => SetValue(value ? _presets[^1] : _presets[0]);
-    }
+        [SerializeField] private string[] _presets = { "Off", "On" };
+        [SerializeField] private BaseUnifiedToggle[] _toggles = { };
 
-    public override void SetValue(string value)
-    {
-        CurrentPreset = value;
-        foreach (var toggle in _toggles)
-            toggle.SetValue(value);
-    }
+        public string CurrentPreset { get; private set; } = string.Empty;
 
-    public override void SetOptionValues(string[] values)
-    {
-        foreach (var toggle in _toggles)
-            toggle.SetOptionValues(values);
-    }
+        public bool isOn => CurrentPreset == _presets[^1];
 
-    public string[] GetPresets()
-    {
-        return _presets;
-    }
+        public void SetOn(bool isOn)
+        {
+            SetOnAsync(isOn).Forget();
+        }
 
-    public UnifiedToggle[] GetToggles()
-    {
-        return _toggles;
+        public async UniTask SetOnAsync(bool isOn)
+        {
+            await SetValueAsync(isOn ? _presets[^1] : _presets[0]);
+        }
+
+        public void SetValue(string preset)
+        {
+            SetValueAsync(preset).Forget();
+        }
+
+        public async UniTask SetValueAsync(string value)
+        {
+            if (CurrentPreset == value)
+                return;
+        
+            CurrentPreset = value;
+
+            using var arrayPool = _toggles
+                .Where(t => t != null && t.enabled)
+                .Select(t => t.SetValueAsync(value))
+                .ToArrayPool();
+            await UniTask.WhenAll(arrayPool.Array);
+        }
+
+        public string[] GetPresets()
+        {
+            return _presets;
+        }
+
     }
 }

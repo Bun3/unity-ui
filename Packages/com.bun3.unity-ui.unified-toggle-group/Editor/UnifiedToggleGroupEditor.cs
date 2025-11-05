@@ -1,86 +1,84 @@
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
-[CustomEditor(typeof(UnifiedToggleGroup), true)]
-public class UnifiedToggleGroupEditor : Editor
+namespace UnifiedToggle.Editor
 {
-    private SerializedProperty _presetsProperty;
-    private SerializedProperty _togglesProperty;
-
-    private void OnEnable()
+    [CustomEditor(typeof(UnifiedToggleGroup), true)]
+    public class UnifiedToggleGroupEditor : UnityEditor.Editor
     {
-        _presetsProperty = serializedObject.FindProperty("_presets");
-        _togglesProperty = serializedObject.FindProperty("_toggles");
-    }
+        private SerializedProperty _presetsProperty;
+        private SerializedProperty _togglesProperty;
 
-    public override void OnInspectorGUI()
-    {
-        var group = (UnifiedToggleGroup)target;
-
-        serializedObject.Update();
-
-        EditorGUI.BeginChangeCheck();
-        
-        EditorGUILayout.PropertyField(_presetsProperty, true);
-
-        using (new EditorGUI.DisabledScope(true))
+        private void OnEnable()
         {
-            EditorGUILayout.PropertyField(_togglesProperty, true);
+            _presetsProperty = serializedObject.FindProperty("_presets");
+            _togglesProperty = serializedObject.FindProperty("_toggles");
         }
-        
-        if (EditorGUI.EndChangeCheck())
+
+        public override void OnInspectorGUI()
         {
+            var group = (UnifiedToggleGroup)target;
+
+            serializedObject.Update();
+
+            EditorGUI.BeginChangeCheck();
+        
+            EditorGUILayout.PropertyField(_presetsProperty, true);
+
+            using (new EditorGUI.DisabledScope(true))
+            {
+                EditorGUILayout.PropertyField(_togglesProperty, true);
+            }
+        
+            if (EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+                group.UpdateValues();
+                MarkAllDirty(group);
+            }
+        
             serializedObject.ApplyModifiedProperties();
-            group.UpdateValues();
-            MarkAllDirty(group);
+
+            EditorGUILayout.Space();
+            DrawButtons(group);
         }
-        
-        serializedObject.ApplyModifiedProperties();
 
-        EditorGUILayout.Space();
-        DrawButtons(group);
-    }
-
-    private void MarkAllDirty(UnifiedToggleGroup group)
-    {
-        EditorUtility.SetDirty(group);
-        if (group.GetToggles() == null) return;
-        
-        foreach (var toggle in group.GetToggles())
+        private void MarkAllDirty(UnifiedToggleGroup group)
         {
-            if (toggle != null)
+            if (!Application.isPlaying)
+                EditorSceneManager.MarkSceneDirty(group.gameObject.scene);
+        }
+
+        private void DrawButtons(UnifiedToggleGroup group)
+        {
+            var changed = false;
+            EditorGUILayout.BeginHorizontal();
+        
+            var presets = group.GetPresets();
+            if (presets == null) return;
+        
+            foreach (var value in presets)
             {
-                EditorUtility.SetDirty(toggle);
+                var origin = GUI.color;
+                GUI.color = group.CurrentPreset == value ? Color.green : Color.white;
+                if (GUILayout.Button(value, GUILayout.Height(30)))
+                {
+                    changed = true;
+                    group.SetValue(value);
+                }
+        
+                GUI.color = origin;
             }
-        }
-    }
-
-    private void DrawButtons(UnifiedToggleGroup group)
-    {
-        var changed = false;
-        EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.EndHorizontal();
         
-        var presets = group.GetPresets();
-        if (presets == null) return;
-        
-        foreach (var value in presets)
-        {
-            var origin = GUI.color;
-            GUI.color = group.CurrentPreset == value ? Color.green : Color.white;
-            if (GUILayout.Button(value, GUILayout.Height(30)))
+            if (changed)
             {
-                changed = true;
-                group.SetValue(value);
+                MarkAllDirty(group);
             }
-        
-            GUI.color = origin;
-        }
-        EditorGUILayout.EndHorizontal();
-        
-        if (changed)
-        {
-            MarkAllDirty(group);
         }
     }
 }
+
+
 

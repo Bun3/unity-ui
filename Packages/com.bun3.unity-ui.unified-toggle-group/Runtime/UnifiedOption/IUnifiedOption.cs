@@ -1,9 +1,14 @@
-public interface IUnifiedOption
-{
-    void SetOptionValues(string[] values);
-}
+using Cysharp.Threading.Tasks;
 
-public interface IUnifiedOption<in TComponent> : IUnifiedOption
+namespace UnifiedToggle
 {
-    public void SetValue(TComponent component, string value);
+    public interface IUnifiedOption
+    {
+        void SetOptionValues(string[] values);
+    }
+
+    public interface IUnifiedOption<in TComponent> : IUnifiedOption
+    {
+        public UniTask SetValueAsync(TComponent component, string value);
+    }
 }

@@ -3,7 +3,15 @@
     "rootNamespace": "UnifiedToggle",
     "references": [
         "GUID:49b49c76ee64f6b41bf28ef951cb0e50",
-        "GUID:0bdd889f83c6c0149856c9d9e61059fb"
+        "GUID:0bdd889f83c6c0149856c9d9e61059fb",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:593a5b492d29ac6448b1ebf7f035ef33",
+        "GUID:029c1c1b674aaae47a6841a0b89ad80e",
+        "GUID:5c01796d064528144a599661eaab93a6",
+        "GUID:dc47925d1a5fa2946bdd37746b2b5d48",
+        "GUID:c71612acbe346a344abbc0dcfdf4f0bd",
+        "GUID:dd45bb705edc4cf47acd3a4ae20a9e23",
+        "GUID:e0cd26848372d4e5c891c569017e11f1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
