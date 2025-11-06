@@ -8,7 +8,7 @@ namespace UnifiedToggle
         {
             base.OnValidate();
 
-            if (_group == _authorGroup)
+            if (_group != null && _group == _authorGroup)
             {
                 EditorUtility.DisplayDialog(
                     "잘못된 그룹 설정",
