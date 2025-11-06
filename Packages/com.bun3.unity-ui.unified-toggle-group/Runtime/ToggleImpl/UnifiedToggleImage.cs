@@ -46,6 +46,6 @@ namespace UnifiedToggle
         [SerializeField, Required(inAutoCache: true), ReadOnly]
         protected Image _image;
 
-        protected override Image component => _image;
+        public override Image component => _image;
     }
 }

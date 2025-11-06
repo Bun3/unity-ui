@@ -39,9 +39,10 @@ namespace UnifiedToggle
     [DisallowMultipleComponent]
     public abstract partial class BaseUnifiedToggle<TComponent> : BaseUnifiedToggle where TComponent : Component
     {
-        protected abstract TComponent component { get; }
+        public abstract TComponent component { get; }
 
         [SerializeReference, SubclassSelector] protected List<IUnifiedOption<TComponent>> _options = new();
+        public IReadOnlyList<IUnifiedOption<TComponent>> Options => _options;
 
         public sealed override async UniTask SetValueAsync(string value)
         {

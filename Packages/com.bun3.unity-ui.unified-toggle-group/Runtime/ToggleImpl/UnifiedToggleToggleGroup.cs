@@ -20,7 +20,7 @@ namespace UnifiedToggle
     {
         [SerializeField, Required(inAutoCache: true), ReadOnly]
         protected UnifiedToggleGroup _group;
-        protected override UnifiedToggleGroup component => _group;
+        public override UnifiedToggleGroup component => _group;
     
         public UnifiedToggleGroup Group => _group;
 

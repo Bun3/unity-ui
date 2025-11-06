@@ -54,6 +54,6 @@ namespace UnifiedToggle
         [SerializeField, Required(inAutoCache: true), ReadOnly]
         protected CanvasGroup _canvasGroup;
 
-        protected override CanvasGroup component => _canvasGroup;
+        public override CanvasGroup component => _canvasGroup;
     }
 }

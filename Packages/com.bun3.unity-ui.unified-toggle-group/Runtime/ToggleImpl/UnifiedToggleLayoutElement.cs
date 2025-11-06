@@ -120,6 +120,6 @@ namespace UnifiedToggle
         [SerializeField, Required(inAutoCache: true), ReadOnly]
         protected LayoutElement _layoutElement;
 
-        protected override LayoutElement component => _layoutElement;
+        public override LayoutElement component => _layoutElement;
     }
 }

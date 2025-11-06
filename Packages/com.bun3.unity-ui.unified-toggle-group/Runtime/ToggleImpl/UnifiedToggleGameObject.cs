@@ -40,6 +40,6 @@ namespace UnifiedToggle
     [Serializable]
     public partial class UnifiedToggleGameObject : BaseUnifiedToggle<UnifiedToggleGameObject>
     {
-        protected override UnifiedToggleGameObject component => this;
+        public override UnifiedToggleGameObject component => this;
     }
 }
