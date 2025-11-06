@@ -13,7 +13,8 @@
       "dependencies": {
         "com.mackysoft.serializereference-extensions": "1.6.1",
         "com.bun3.unity-ui.core": "1.0.1",
-        "com.cysharp.unitask": "2.5.10"
+        "com.cysharp.unitask": "2.5.10",
+        "com.cysharp.zlinq": "1.5.3"
       }
     },
     "com.cysharp.r3": {
