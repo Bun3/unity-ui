@@ -33,7 +33,7 @@ namespace UnifiedToggle
             {
                 if (go.TryGetComponent<UnifiedToggleToggleGroup>(out var groupToggle) && groupToggle.Group != null)
                 {
-                    currentPreset += $" ({groupToggle.Group.CurrentPreset})";
+                    currentPreset = $"{groupToggle._authorGroup?.CurrentPreset} ({groupToggle.Group.CurrentPreset})";
                 }
                 else
                 {
