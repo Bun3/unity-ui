@@ -19,17 +19,20 @@ namespace UnifiedToggle
 #if UNITY_EDITOR
             OnDestroyEditor();
 #endif
-            _authorGroup.EnsureValidToggles();
+            if (_authorGroup)
+                _authorGroup.EnsureValidToggles();
         }
 
         protected virtual void OnEnable()
         {
-            _authorGroup.Register(this);
+            if (_authorGroup)
+                _authorGroup.Register(this);
         }
 
         protected virtual void OnDisable()
         {
-            _authorGroup.Unregister(this);
+            if (_authorGroup)
+                _authorGroup.Unregister(this);
         }
     }
 
