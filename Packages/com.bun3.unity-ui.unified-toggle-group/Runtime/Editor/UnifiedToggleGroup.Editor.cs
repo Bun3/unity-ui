@@ -22,6 +22,8 @@ namespace UnifiedToggle
     
         public void Register(BaseUnifiedToggle toggle)
         {
+            if (toggle == null)
+                return;
             if (_toggles.Contains(toggle)) 
                 return;
             Array.Resize(ref _toggles, _toggles.Length + 1);
@@ -31,6 +33,8 @@ namespace UnifiedToggle
     
         public void Unregister(BaseUnifiedToggle toggle)
         {
+            if (toggle == null)
+                return;
             if (!_toggles.Contains(toggle)) 
                 return;
             _toggles = _toggles.Where(t => t != toggle).ToArray();
