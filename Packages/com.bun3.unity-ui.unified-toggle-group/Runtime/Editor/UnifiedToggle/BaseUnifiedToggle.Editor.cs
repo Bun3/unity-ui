@@ -53,7 +53,7 @@ namespace UnifiedToggle
 
         partial void OnDestroyEditor()
         {
-            _authorGroup.EnsureValidToggles();
+            
         }
     }
 

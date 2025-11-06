@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -18,6 +19,17 @@ namespace UnifiedToggle
 #if UNITY_EDITOR
             OnDestroyEditor();
 #endif
+            _authorGroup.EnsureValidToggles();
+        }
+
+        protected virtual void OnEnable()
+        {
+            _authorGroup.Register(this);
+        }
+
+        protected virtual void OnDisable()
+        {
+            _authorGroup.Unregister(this);
         }
     }
 
