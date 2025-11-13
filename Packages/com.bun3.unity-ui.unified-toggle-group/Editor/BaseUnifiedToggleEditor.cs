@@ -7,9 +7,6 @@ namespace UnifiedToggle.Editor
     /// <summary>
     /// BaseUnifiedToggle을 상속하는 모든 클래스에 적용되는 커스텀 에디터입니다.
     /// </summary>
-#if ODIN_INSPECTOR
-    [OdinDontUseOdinInspector]
-#endif
     [CustomEditor(typeof(BaseUnifiedToggle), true)]
     public class BaseUnifiedToggleEditor : UnityEditor.Editor
     {
