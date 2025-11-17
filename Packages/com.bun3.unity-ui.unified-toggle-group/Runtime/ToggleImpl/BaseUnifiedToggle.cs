@@ -21,6 +21,8 @@ namespace UnifiedToggle
             if (_authorGroup)
                 _authorGroup.EnsureValidToggles();
         }
+        
+        public abstract void SetOptionValues(string[] values);
 
         protected virtual void OnEnable()
         {
@@ -42,6 +44,15 @@ namespace UnifiedToggle
 
         [SerializeReference, SubclassSelector] protected List<IUnifiedOption<TComponent>> _options = new();
         public IReadOnlyList<IUnifiedOption<TComponent>> Options => _options;
+        
+        public sealed override void SetOptionValues(string[] values)
+        {
+            for (var i = 0; i < _options.Count; i++)
+            {
+                var option = _options[i];
+                option?.SetOptionValues(values);
+            }
+        }
 
         public sealed override async UniTask SetValueAsync(string value)
         {

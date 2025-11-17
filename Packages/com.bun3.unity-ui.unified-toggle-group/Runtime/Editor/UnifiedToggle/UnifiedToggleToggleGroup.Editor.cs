@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 
 namespace UnifiedToggle
@@ -21,3 +22,4 @@ namespace UnifiedToggle
         }
     }
 }
+#endif

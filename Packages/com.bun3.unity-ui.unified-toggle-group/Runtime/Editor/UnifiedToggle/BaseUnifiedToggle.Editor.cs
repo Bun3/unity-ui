@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -25,7 +26,7 @@ namespace UnifiedToggle
                 selectionRect.width * 0.5f,
                 selectionRect.height
             );
-            
+
             var currentPreset = toggle._authorGroup?.CurrentPreset;
             currentPreset ??= "No Preset";
 
@@ -49,26 +50,13 @@ namespace UnifiedToggle
             });
         }
 
-        public abstract void SetOptionValues(string[] values);
-
         partial void OnDestroyEditor()
         {
-            
         }
     }
 
     public partial class BaseUnifiedToggle<TComponent>
     {
-        public sealed override void SetOptionValues(string[] values)
-        {
-            for (var i = 0; i < _options.Count; i++)
-            {
-                var option = _options[i];
-                option?.SetOptionValues(values);
-            }
-        }
-
-
         protected virtual void OnValidate()
         {
             var set = new HashSet<Type>();
@@ -93,3 +81,4 @@ namespace UnifiedToggle
         }
     }
 }
+#endif

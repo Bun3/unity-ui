@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace UnifiedToggle
 {
     public partial class UnifiedToggleGameObject
@@ -8,3 +9,4 @@ namespace UnifiedToggle
         }
     }
 }
+#endif

@@ -1,4 +1,4 @@
-﻿
+﻿#if UNITY_EDITOR
 namespace UnifiedToggle
 {
     public partial interface IUnifiedToggle
@@ -6,3 +6,4 @@ namespace UnifiedToggle
         void SetOptionValues(string[] values);
     }
 }
+#endif

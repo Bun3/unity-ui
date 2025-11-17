@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using ZLinq;
@@ -48,6 +49,44 @@ namespace UnifiedToggle
         public string[] GetPresets()
         {
             return _presets;
+        }
+        
+        public void Register(BaseUnifiedToggle toggle)
+        {
+            if (toggle == null)
+                return;
+            if (_toggles.Contains(toggle))
+                return;
+            Array.Resize(ref _toggles, _toggles.Length + 1);
+            _toggles[^1] = toggle;
+            UpdateValues();
+        }
+
+        public void Unregister(BaseUnifiedToggle toggle)
+        {
+            if (toggle == null)
+                return;
+            if (!_toggles.Contains(toggle))
+                return;
+            _toggles = _toggles.Where(t => t != toggle).ToArray();
+            UpdateValues();
+        }
+
+        public void EnsureValidToggles()
+        {
+            _toggles = _toggles.Where(x => x != null).ToArray();
+        }
+
+        [ContextMenu(nameof(UpdateValues))]
+        public void UpdateValues()
+        {
+            SetOptionValues(_presets);
+        }
+
+        public void SetOptionValues(string[] values)
+        {
+            foreach (var toggle in _toggles)
+                toggle.SetOptionValues(values);
         }
 
     }
