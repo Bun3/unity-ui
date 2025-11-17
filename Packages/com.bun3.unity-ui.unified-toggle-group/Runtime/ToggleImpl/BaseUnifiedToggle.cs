@@ -3,6 +3,10 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using ZLinq;
 
+#if ODIN_INSPECTOR
+using Sirenix.Serialization;
+#endif
+
 namespace UnifiedToggle
 {
     [ExecuteAlways]
@@ -42,7 +46,12 @@ namespace UnifiedToggle
     {
         public abstract TComponent component { get; }
 
-        [SerializeReference, SubclassSelector] protected List<IUnifiedOption<TComponent>> _options = new();
+#if ODIN_INSPECTOR
+        [SerializeReference, OdinSerialize]
+#else
+        [SerializeReference, SubclassSelector]
+#endif
+        protected List<IUnifiedOption<TComponent>> _options = new();
         public IReadOnlyList<IUnifiedOption<TComponent>> Options => _options;
         
         public sealed override void SetOptionValues(string[] values)
