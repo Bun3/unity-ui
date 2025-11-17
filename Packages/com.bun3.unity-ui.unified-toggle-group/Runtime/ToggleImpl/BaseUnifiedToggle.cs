@@ -4,19 +4,13 @@ using UnityEngine;
 using ZLinq;
 
 #if ODIN_INSPECTOR
-using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 #endif
 
 namespace UnifiedToggle
 {
     [ExecuteAlways]
-    public abstract partial class BaseUnifiedToggle : 
-#if ODIN_INSPECTOR
-        SerializedMonoBehaviour, IUnifiedToggle
-#else
-        MonoBehaviour, IUnifiedToggle
-#endif
+    public abstract partial class BaseUnifiedToggle : MonoBehaviour, IUnifiedToggle
     {
         [SerializeField] protected UnifiedToggleGroup _authorGroup;
     
